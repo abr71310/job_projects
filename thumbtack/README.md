@@ -23,4 +23,4 @@ The test inputs after in5.txt are my own special edge cases:
 
 The outputs all correspond to the input files, with the format "out[#].txt".
 
-The intention behind this was to ensure consistency in the test unit.
+The intention behind this was to ensure consistency when testing.
