@@ -43,8 +43,12 @@ class Database(object):
 		if key in self.values:
 			self.values.pop(key)
 		
+		if key in self.commits:
+			self.commits.remove(key)
+		
 		# Add the current key to the unset stack
 		self.unset.append(key)
+		self.commits.append(key)
 		
 	# Print out the counter of vars that have val. If none exist, print 0.
 	def numequalto(self, value):
@@ -64,15 +68,32 @@ class Database(object):
 		return None
 		
 	def commit(self):
+		if self.parent == None:
+			self.parent = Database()		
 		# commit current transactions to super! 
 		for key in self.values:
 			self.parent.values[key] = self.values[key]
 		for key in self.unset:
 			self.parent.values.pop(key)
+			
+	def rollback(self):
+		# rollback current transactions from super! 
+		for key in self.parent.values:
+			self.values[key] = self.parent.values[key]
+		for key in self.parent.unset:
+			#print key
+			self.values.pop(key)
+			
+	def begin(self):
+		if self.parent == None:
+			self.parent = Database()
+		# begin another set of transactions (set parent!)
+		for key in self.values:
+			self.parent.values[key] = self.values[key] 
 
 if __name__ == "__main__":
 	main_db = Database()
-	cur_db = main_db
+	cur_db = Database(main_db)
 	parse_line = sys.stdin.readline().strip()
 	while parse_line != 'END':
 		# Split arguments by single whitespace character (' ')
@@ -82,21 +103,35 @@ if __name__ == "__main__":
 		legalCmds = ['SET', 'GET', 'UNSET', 'NUMEQUALTO', 'BEGIN', 'ROLLBACK', 'COMMIT']
 		if args[0] in legalCmds:
 			if args[0] == 'ROLLBACK':
+				#print "ROLLBACK"
+				#print "cur_db.commits: ", cur_db.commits
 				if cur_db.commits == []:
 					print "NO TRANSACTION"
 				else:
+					cur_db.rollback()
 					# Store old record in a temporary variable
 					temp_db = cur_db.parent
+					#print "temp_db: ", temp_db
 					# Kill current DB - we're rolling back!
 					del cur_db
 					# Now set our current DB to the temp var
 					cur_db = temp_db
+					#print "cur_db: ", cur_db.values
+				#print "cur_db: ", cur_db.values
+				#print "main_db: ", main_db.values
+				#print "new_db: ", new_db.values 
 			elif args[0] == 'BEGIN':
+				cur_db.begin()
 				# Create new DB with current DB as the "parent" (if it exists)
 				new_db = Database(cur_db)
-				# Create a pointer just in case
-				cur_db = new_db
+				# Create a pointer to the old DB
+				cur_db = main_db
+				#print "BEGIN"
+				#print "cur_db: ", cur_db.values
+				#print "main_db: ", main_db.values
+				#print "new_db: ", new_db.values 
 			elif args[0] == 'COMMIT':
+				#print "COMMIT"
 				if cur_db.values == {}:
 					print "NO TRANSACTION"
 				else:
