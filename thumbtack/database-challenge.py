@@ -35,6 +35,10 @@ class Database(object):
 			# Add counter, if it doesn't exist
 			self.counter[value] = 1
 		
+		# Remove key from the unset stack, assuming it was unset.
+		if key in self.unset:
+			self.unset.pop(key);
+		
 	# retrieves and prints key stored, or "NULL" otherwise	
 	def get(self, key):
 		if self.get_curval(key) != None:
