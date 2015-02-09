@@ -15,11 +15,12 @@ The test inputs included are as follows (from the challenge document):
 * in3.txt
 * in4.txt
 * in5.txt
-
-The test inputs after in5.txt are my own special edge cases:
 * in6.txt
+
+The test inputs after in6.txt are my own special edge cases:
 * in7.txt
 * in8.txt
+* in9.txt
 
 The outputs all correspond to the input files, with the format "out[#].txt".
 

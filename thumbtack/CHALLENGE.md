@@ -23,13 +23,16 @@ Your database should accept the following commands:
 
 Commands will be fed to your program one at a time, with each command on its own line. Any output that your program generates should end with a newline character. Here are some example command sequences:
 
+<code>
 INPUT			OUTPUT
 SET ex 10		
 GET ex			10
 UNSET ex
 GET ex			NULL
 END
+</code>
 
+<code>
 INPUT			OUTPUT
 SET a 10
 SET b 10
@@ -38,6 +41,7 @@ NUMEQUALTO 20	0
 SET b 30		
 NUMEQUALTO 10	1
 END
+</code>
 
 Transaction Commands
 -------------
@@ -49,6 +53,7 @@ In addition to the above data commands, your program should also support databas
 
 Any data command that is run outside of a transaction block should commit immediately. Here are some example command sequences:
 
+<code>
 INPUT		OUTPUT
 BEGIN
 SET a 10
@@ -61,7 +66,9 @@ GET a		10
 ROLLBACK
 GET a		NULL
 END
+</code>
 
+<code>
 INPUT		OUTPUT
 BEGIN
 SET a 30	
@@ -71,7 +78,9 @@ COMMIT
 GET a		40
 ROLLBACK	NO TRANSACTION
 END
+</code>
 
+<code>
 INPUT		OUTPUT
 SET a 50
 BEGIN
@@ -85,7 +94,9 @@ GET a		60
 COMMIT
 GET a		60
 END
+</code>
 
+<code>
 INPUT				OUTPUT
 SET a 10
 BEGIN
@@ -97,6 +108,7 @@ ROLLBACK
 NUMEQUALTO 10		1
 COMMIT
 END
+</code>
 
 
 Performance Considerations
