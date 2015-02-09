@@ -2,8 +2,7 @@
 
 # Thumbtack : Simple Database Challenge
 # Author: Michael Shao
-# Modified: 02/09/2015 (Time elapsed: 3 hours 25 minutes)
-# Version: 1.1.0.1
+# Modified: 02/09/2015 (Time elapsed: 5 hours 30 minutes)
 
 import sys
 
