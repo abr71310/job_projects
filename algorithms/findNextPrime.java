@@ -27,7 +27,7 @@ public class findNextPrime {
 						isPrime = false;
 						break;
 					}
-				isPrime = true;
+					isPrime = true;
 				}
 			}
 		}
@@ -36,9 +36,10 @@ public class findNextPrime {
 	
 	public static void main(String [] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); 
+		System.out.print("Enter a number (less than 2^64) to find the next prime:");
 		String text = in.readLine();
 		long x = Long.parseLong(text);
-		System.out.println(findNext(x));
+		System.out.println("Next Prime: "+findNext(x));
 	}
 
 }
