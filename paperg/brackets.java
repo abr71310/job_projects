@@ -79,5 +79,8 @@ public class brackets {
 				// System.out.println(s);
 			}
         }
+        if (out != null) {
+			out.close();
+		}
 	}
 }
